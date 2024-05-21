@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+/* Button */
+.btn-danger {
+    background-color: #bd0001;
+    border-radius: 10px;
+    border-color: #bd0001;
+    padding: 10px 45px;
+    color: white;
+}
+.btn-outline-danger {
+    background-color: transparent;
+    border-radius: 10px;
+    border-color: #bd0001;
+    padding: 10px 45px;
+    color: #bd0001;
+}
+
+/* Navbar */
+.nav-item .nav-link {
+    font-size: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.scroll-nav-active {
+    background-color: white;
+    /* border-bottom: 1px solid #bd0001; */
+    box-shadow: 1px 1px 11px -1px rgba(1, 1, 1, 0.08);
+}
+
+.text-nav-active {
+    color: black;
+}
+
+/* Hero */
+#hero {
+    background-image: url("../../assets/images/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+}
+
+.hero-title {
+    padding-top: 200px;
+}
+
+/* Responsive layar kecil 450 */
+@media screen and (min-width: 450px) {
+    .hero-text {
+        font-size: 35px;
+        font-weight: 600;
+    }
+}
+
+/* Responsive layar kecil 550 */
+@media screen and (min-width: 550px) {
+    .hero-text {
+        font-size: 35px;
+        font-weight: 600;
+    }
+}
+
+/* Responsive layar kecil 800 */
+@media screen and (min-width: 800px) {
+    .hero-text {
+        font-size: 65px;
+        font-weight: 600;
+    }
+}
+
+/* Hero */
+
+/* Join */
+.stripe {
+    height: 5px;
+    width: 40px;
+    background-color: #bd0001;
+}
+
+/* video */
+#video {
+    background-image: url("../../assets/images/background-library.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+}
