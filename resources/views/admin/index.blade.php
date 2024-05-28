@@ -17,16 +17,6 @@
                         </div>
                       </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card shadow-sm rounded-3 border-0">
-                        <img src="{{ asset('assets/images/books.png') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Photo Buku-buku</h5>
-                          <p class="card-text">Atur dan kelola daftar-daftar buku</p>
-                          <a href="#" class="btn btn-primary">Detail</a>
-                        </div>
-                      </div>
-                </div>
             </div>
         </div>
     </section>

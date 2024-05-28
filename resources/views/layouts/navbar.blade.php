@@ -13,11 +13,11 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Beranda</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link active"  href="#">Tentang Kami</a>
-              </li>
+              </li> --}}
               <li class="nav-item">
-                <a class="nav-link active"  href="#">Pemberitahuan</a>
+                <a class="nav-link" href="{{ route('notifications.index') }}">Pemberitahuan</a>
               </li>
               
 
@@ -30,6 +30,7 @@
                     <button type="submit" class="btn btn-dark">Logout</button>
                   </form>
                 @else
+                <form action="login" method="get">
                   <button class="btn btn-danger">Masuk</button>
               @endauth
             </div>

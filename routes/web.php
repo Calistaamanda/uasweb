@@ -4,8 +4,12 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\KoleksiController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', [AppController::class, 'index']);
 
@@ -13,9 +17,26 @@ Route::get('/koleksi', [AppController::class, 'koleksi']);
 
 Route::get('/detail/{slug}', [AppController::class, 'detail']);
 
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::post('/logout', [AuthController::class, 'logout']);
+// Register routes
+Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
+
+// Login routes
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Forgot password routes
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Reset password routes
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('/home', function () {
+    // Hanya user yang terautentikasi yang bisa mengakses halaman ini
+})->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
@@ -25,3 +46,11 @@ Route::post('/blog/store', [BukuController::class, 'store'])->name('blog.store')
 Route::get('/blog/edit/{id}', [BukuController::class, 'edit'])->name('blog.edit')->middleware('auth');
 Route::post('/blog/update/{id}', [BukuController::class, 'update'])->name('blog.update')->middleware('auth');
 Route::post('/blog/destroy/{id}', [BukuController::class, 'destroy'])->name('blog.destroy')->middleware('auth');
+
+Route::get('/koleksi/search', [KoleksiController::class, 'search'])->name('koleksi.search');
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/bukus/download/{buku}', [BukuController::class, 'download'])->name('bukus.download');
+});

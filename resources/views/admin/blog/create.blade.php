@@ -20,7 +20,7 @@
                 <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul"
                 value="{{ old('judul') }}">
                 
-                @error('judul')
+                @error('judul') 
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
