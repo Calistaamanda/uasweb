@@ -13,9 +13,9 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Beranda</a>
               </li>
-              {{-- <li class="nav-item">
-                <a class="nav-link active"  href="#">Tentang Kami</a>
-              </li> --}}
+              <li class="nav-item">
+                <a class="nav-link" href="/koleksi">Koleksi</a>
+            </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('notifications.index') }}">Pemberitahuan</a>
               </li>

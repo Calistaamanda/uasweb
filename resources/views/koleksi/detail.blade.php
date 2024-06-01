@@ -13,6 +13,7 @@
             <p class="text-secondary">{!! $buku->desc !!}</p>
         </div>
         <div class="mt-4">
+            <p class="mb-3 text-muted">Baca selengkapnya</p> <!-- Tambahan teks "Baca selengkapnya" dengan warna pudar -->
             @if (Auth::check())
                 <a href="{{ route('bukus.download', $buku->id) }}" class="btn btn-success">Unduh Buku</a>
             @else

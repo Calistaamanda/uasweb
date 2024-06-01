@@ -91,10 +91,11 @@
             Nikmati kenyamanan membaca dan belajar secara online, kapan pun dan di mana pun Anda inginkan. 
             Mulailah perjalanan literasi digital Anda bersama kami sekarang!
           </p>
+          <form action="login" method="get">
           <button class="btn btn-outline-danger">Join</button>
         </div>
         <div class="col-lg-6">
-          <img src="{{ asset('assets/images/member.jpg') }}" class="img-fluid" alt="">
+          <img src="{{ asset('assets/images/Awangsedangmembaca.jpeg') }}" class="img-fluid" alt="">
 
         </div>
       </div>

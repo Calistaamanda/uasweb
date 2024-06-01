@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Str;
@@ -10,8 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use App\Models\User;
-use App\Notifications\NewBookNotification;
-use Illuminate\Support\Facades\Notification;
+
 
 class BukuController extends Controller
 {
@@ -33,11 +33,11 @@ class BukuController extends Controller
     public function store(Request $request)
 {
     $rules = [
-        'judul' => 'required',
-        'image' => 'required|max:1000|mimes:jpg,jpeg,png,webp',
-        'penulis' => 'required',
-        'genre' => 'required',
-        'desc' => 'required|min:20',
+        'judul' => 'required|string|max:255',
+        'image' => 'required|image|max:2048|mimes:jpg,jpeg,png,webp',
+        'penulis' => 'required|string|max:255',
+        'genre' => 'required|string|max:255',
+        'desc' => 'required|string|min:20',
         'dokumen' => 'required|mimes:pdf|max:20000', // Validasi PDF
     ];
 
@@ -53,16 +53,16 @@ class BukuController extends Controller
 
     $this->validate($request, $rules, $messages);
 
-    // Image
+    // Proses Image
     $fileName = time() . '.' . $request->image->extension();
     $request->file('image')->storeAs('public/buku', $fileName);
 
-    // Dokumen
+    // Proses Dokumen
     $dokumenExtension = $request->dokumen->extension();
     $dokumenName = Str::slug($request->judul, '-') . '_' . time() . '.' . $dokumenExtension;
     $request->file('dokumen')->storeAs('public/content-buku', $dokumenName);
 
-    // Buku
+    // Proses Deskripsi (dengan gambar)
     $storage = "storage/content-buku";
     $dom = new \DOMDocument();
     libxml_use_internal_errors(true);
@@ -79,7 +79,6 @@ class BukuController extends Controller
             $fileNameContent = uniqid();
             $fileNameContentRand = substr(md5($fileNameContent), 6, 6) . '_' . time();
             $filePath = ("$storage/$fileNameContentRand.$mimetype");
-            // $image = Image::make($src)->resize(1440, 720)->encode($mimetype, 100)->save(public_path($filePath));
             $new_src = asset($filePath);
             $img->removeAttribute('src');
             $img->setAttribute('src', $new_src);
@@ -87,7 +86,8 @@ class BukuController extends Controller
         }
     }
 
-    Buku::create([
+    // Simpan Buku
+    $buku = Buku::create([
         'judul' => $request->judul,
         'slug' => Str::slug($request->judul, '-'),
         'image' => $fileName,
@@ -97,8 +97,15 @@ class BukuController extends Controller
         'dokumen' => $dokumenName, // Menyimpan nama file PDF
     ]);
 
-    return redirect(route('blog'))->with('success', 'Data berhasil disimpan');
+    // Buat notifikasi baru
+    Notification::create([
+        'title' => 'Buku Baru Ditambahkan',
+        'message' => 'Buku "' . $buku->judul . '" telah ditambahkan oleh admin.',
+    ]);
+
+    return redirect()->route('blog')->with('success', 'Buku berhasil ditambahkan.');
 }
+
 
 
     // Halaman Edit
@@ -112,103 +119,54 @@ class BukuController extends Controller
 
     // Fungsi Update
     public function update(Request $request, $id)
-{
-    $buku = Buku::find($id);
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'penulis' => 'required|string|max:255',
+            'genre' => 'required|string|max:255',
+            'desc' => 'required|string',
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:20000', // Validasi untuk dokumen
+        ]);
 
-    $fileCheck = $request->hasFile('image') ? 'required|max:1000|mimes:jpg,jpeg,png' : '';
-    $dokumenCheck = $request->hasFile('dokumen') ? 'required|mimes:pdf|max:20000' : '';
+        $buku = Buku::findOrFail($id);
 
-    $rules = [
-        'judul' => 'required',
-        'image' => $fileCheck,
-        'penulis' => 'required',
-        'genre' => 'required',
-        'desc' => 'required|min:20',
-        'dokumen' => $dokumenCheck,
-    ];
-
-    $messages = [
-        'judul.required' => 'Judul wajib diisi!',
-        'image.required' => 'Image wajib diisi!',
-        'penulis.required' => 'Penulis wajib diisi!',
-        'genre.required' => 'Genre wajib diisi!',
-        'desc.required' => 'Deskripsi wajib diisi!',
-        'dokumen.required' => 'Dokumen wajib diisi!',
-        'dokumen.mimes' => 'Dokumen harus berupa file PDF!',
-    ];
-
-    $this->validate($request, $rules, $messages);
-
-    // Update Image jika ada file baru
-    if ($request->hasFile('image')) {
-        if (\File::exists('storage/buku/' . $buku->image)) {
-            \File::delete('storage/buku/' . $buku->image);
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            if ($request->old_image) {
+                Storage::delete('public/buku/' . $request->old_image);
+            }
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/buku', $imageName);
+            $buku->image = $imageName;
         }
-        $fileName = time() . '.' . $request->image->extension();
-        $request->file('image')->storeAs('public/buku', $fileName);
-    } else {
-        $fileName = $buku->image;
-    }
 
-    // Update Dokumen jika ada file baru
-    if ($request->hasFile('dokumen')) {
-        if (\File::exists('storage/content-buku/' . $buku->dokumen)) {
-            \File::delete('storage/content-buku/' . $buku->dokumen);
+        // Handle dokumen upload
+        if ($request->hasFile('dokumen')) {
+            if ($buku->dokumen) {
+                Storage::delete('public/buku/' . $buku->dokumen);
+            }
+            $dokumenName = time() . '.' . $request->dokumen->extension();
+            $request->dokumen->storeAs('public/buku', $dokumenName);
+            $buku->dokumen = $dokumenName;
         }
-        $dokumenFileName = time() . '.' . $request->dokumen->extension();
-        $request->file('dokumen')->storeAs('public/content-buku', $dokumenFileName);
-    } else {
-        $dokumenFileName = $buku->dokumen;
+
+        $buku->judul = $request->judul;
+        $buku->penulis = $request->penulis;
+        $buku->genre = $request->genre;
+        $buku->desc = $request->desc;
+        $buku->save();
+
+        return redirect()->route('blog')->with('success', 'Buku berhasil diperbarui.');
     }
-
-    // Buku
-    $storage = "storage/content-buku";
-    $dom = new \DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML($request->desc, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NOIMPLIED);
-    libxml_clear_errors();
-
-    $images = $dom->getElementsByTagName('img');
-
-    foreach ($images as $img) {
-        $src = $img->getAttribute('src');
-        if (preg_match('/data:image/', $src)) {
-            preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
-            $mimetype = $groups['mime'];
-            $fileNameContent = uniqid();
-            $fileNameContentRand = substr(md5($fileNameContent), 6, 6) . '_' . time();
-            $filePath = ("$storage/$fileNameContentRand.$mimetype");
-            // $image = Image::make($src)->resize(1200, 1200)->encode($mimetype, 100)->save(public_path($filePath));
-            $new_src = asset($filePath);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $new_src);
-            $img->setAttribute('class', 'img-responsive');
-        }
-    }
-
-    $buku->update([
-        'judul' => $request->judul,
-        'image' => $fileName,
-        'penulis' => $request->penulis,
-        'genre' => $request->genre,
-        'desc' => $dom->saveHTML(),
-        'dokumen' => $dokumenFileName, // Menyimpan nama file PDF
-    ]);
-
-    return redirect(route('blog'))->with('success', 'Data berhasil diupdate');
-}
 
     // Fungsi Delete
     public function destroy($id)
     {
-        $buku = Buku::find($id);
-        if (\File::exists('storage/buku/' . $buku->image)) {
-            \File::delete('storage/buku/' . $buku->image);
-        }
-
+        $buku = Buku::findOrFail($id);
         $buku->delete();
-
-        return redirect(route('blog'))->with('success', 'data berhasil di hapus');
+        
+        return redirect()->route('blog')->with('success', 'Buku berhasil dihapus.');
     }
 
     public function download(Buku $buku)

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="py-5" style="margin-top: 100px">
-        <div class="container col-xxl-8">
+        <div class="container col-xxl-12">
             <h4 class="mb-4">Halaman Daftar Buku</h4>
 
             <a href="{{ route('blog.create') }}" class="btn btn-primary mb-3">Masukkan Buku</a>
@@ -16,15 +16,15 @@
             @endif
 
             <div class="table-responsive py-3">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped w-100">
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
+                            <th>Gambar</th>
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>Genre</th>
-                            <th>Desc</th>
+                            <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@
                             <td>{{ $buku->judul }}</td>
                             <td>{{ $buku->penulis }}</td>
                             <td>{{ $buku->genre }}</td>
-                            <td>{{ $buku->desc }}</td>
+                            <td>{{ strip_tags($buku->desc) }}</td>
                             <td>
                                 <a href="{{ route('blog.edit', $buku->id) }}" class="btn btn-warning">Edit</a>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $buku->id }}">Hapus</button>

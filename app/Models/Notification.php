@@ -9,11 +9,9 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $table = 'notifikasi'; // Tambahkan properti ini
-
+    // Menambahkan properti fillable
     protected $fillable = [
-        'title',
-        'message',
-        'status',
+        'title', 
+        'message'
     ];
 }
