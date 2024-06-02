@@ -40,7 +40,7 @@
       </div>
     </section>
 
-    {{-- berita --}}
+    {{-- koleksi --}}
     <section id="berita" class="py-5">
     <div class="container">
 
@@ -56,52 +56,67 @@
           <div class="konten-koleksi">
             <p class="mb-3 text-secondary">{{ $item->create_at }}</p>
             <h4 class="fw-bold mb-3">{{ $item->judul }}</h4>
-            {{-- <p class="text-secondary">#teenager</p> --}}
             <a href="/detail/{{ $item->slug }}" 
               class="text-decoration-none text-danger">Selengkapnya</a>
           </div>
         </div>
       </div>
       @endforeach
-      
-      
     </div>
-
     <div class="footer-koleksi text-center">
       <a href="/koleksi" class="btn btn-outline-danger">Buku Lainnya</a>
     </div>
     </div>
     </section>
-    {{-- berita --}}
+    {{-- koleksi --}}
 
-    {{-- Join --}}
-    <section id="join" class="py-5" data-aos="flip-down">
-    <iv class="container py-5">
-    <div class="row d-flex align-items-center">
-      <div class="col-lg-6">
-        <div class="d-flex align-items-center mb-3">
-          <div class="stripe me-2"></div>
-            <h5>Daftar Anggota</h5>
+    <!-- berita -->
+<div class="container px-4 px-lg-5 my-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <div class="header-koleksi text-center mb-5">
+        <h2 class="fw-bold">Berita Terkini</h2>
+      </div>
+      <div class="row gy-4" data-aos="flip-up">
+        <!-- Post preview-->
+        <div class="col-md-12">
+          <div class="post-preview border rounded p-4 shadow-sm">
+            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
+            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
+            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
+            <p class="post-meta mt-3">
+              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
+            </p>
           </div>
-          <h1 class="fw-bold mb-2">Mari bergabung menjadi anggota perpustakaan kami, untuk meraih impian literasi kita!</h1>
-          <p class="mb-3">
-            mari bergabung sebagai anggota perpustakaan digital kami! 
-            Dengan menjadi anggota, Anda akan mendapatkan akses tak terbatas 
-            ke koleksi e-book, dan sumber referensi lainnya dari mana pun Anda berada. 
-            Nikmati kenyamanan membaca dan belajar secara online, kapan pun dan di mana pun Anda inginkan. 
-            Mulailah perjalanan literasi digital Anda bersama kami sekarang!
-          </p>
-          <form action="login" method="get">
-          <button class="btn btn-outline-danger">Join</button>
         </div>
-        <div class="col-lg-6">
-          <img src="{{ asset('assets/images/Awangsedangmembaca.jpeg') }}" class="img-fluid" alt="">
-
+        <!-- Post preview-->
+        <div class="col-md-12">
+          <div class="post-preview border rounded p-4 shadow-sm">
+            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
+            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
+            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
+            <p class="post-meta mt-3">
+              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
+            </p>
+          </div>
+        </div> 
+        <!-- Post preview-->
+        <div class="col-md-12">
+          <div class="post-preview border rounded p-4 shadow-sm">
+            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
+            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
+            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
+            <p class="post-meta mt-3">
+              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    </section>
-    {{-- Join --}}
+  </div>
+</div>
+<!-- berita -->
+
 
     {{-- Video --}}
     <section id="video" class="py-5" data-aos="zoom-in">

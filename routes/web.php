@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\KoleksiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\BeritaController;
 
 
 Route::get('/', [AppController::class, 'index']);
@@ -66,3 +67,12 @@ Route::get('/pemberitahuan', [NotificationController::class, 'index'])->name('no
 Route::post('/pemberitahuan/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 // Route::get('/navbar', [NavbarController::class, 'index']);
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+// berita
+// Halaman admin
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita')->middleware('auth');
+Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create')->middleware('auth');
+Route::post('/berita/store', [BeritaController::class, 'store'])->name('berita.store')->middleware('auth');
+Route::delete('/berita/destroy/{id}', [BeritaController::class, 'destroy'])->name('berita.destroy')->middleware('auth');

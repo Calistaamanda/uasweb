@@ -15,9 +15,18 @@
                           <p class="card-text">Atur dan kelola daftar-daftar buku</p>
                           <a href="{{ route('blog') }}" class="btn btn-primary">Detail</a>
                         </div>
-                      </div>
+                    </div>
                 </div>
-            </div>
+                <div class="col-lg-4">
+                    <div class="card shadow-sm rounded-3 border-0">
+                        <img src="{{ asset('assets/images/poto-menyusun-buku.jpg') }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">Buku-buku Best Seller</h5>
+                          <p class="card-text">Atur dan kelola Buku-Buku Best Seller</p>
+                          <a href="{{ route('berita') }}" class="btn btn-primary">Detail</a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </section>
 @endsection
