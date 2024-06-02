@@ -11,7 +11,7 @@
                 <a href="">Masukkan Berita</a>
             </div>
 
-            <h4>Halaman Buat Daftar Berita</h4>
+            <h4>Halaman Buat Daftar berita</h4>
 
             <form action="{{ route('berita.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -28,8 +28,8 @@
             </div>
 
                     <div class="form-group mb-4">
-                        <label for="">Deskripsi Buku</label>
-                        <textarea name="desc" id="summernote">
+                        <label for="">Isi Berita</label>
+                        <textarea name="isi" id="summernote">
                             {{ old('isi') }}
                         </textarea>
                         
@@ -39,7 +39,6 @@
                         </div>
                 @enderror
             </div>
-
 
             <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

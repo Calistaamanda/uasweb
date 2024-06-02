@@ -42,17 +42,9 @@
                 <h5 class="fw-bold mb-3">Navigasi</h5>
                 <div class="d-flex">
                 <ul class="nav flex-column me-5">
-                    <li class="nav-item mb-2"><a href="" class="nav-link p-0 text-muted">Tentang Kami</a>
-                    </li>
-                    <li class="nav-item mb-2"><a href="" class="nav-link p-0 text-muted">Koleksi</a>
-                </ul>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" 
-                        class="nav-link p-0 text-muted">Anggota</a></li>
-                    <li class="nav-item mb-2"><a href="/bergabung" 
+                    <li class="nav-item mb-2"><a href="/koleksi" class="nav-link p-0 text-muted">Koleksi</a>
+                    <li class="nav-item mb-2"><a href="login" 
                         class="nav-link p-0 text-muted">Bergabung</a></li>
-                </ul>
-
                 </div>
             </div>
 
@@ -83,8 +75,13 @@
             {{-- Kolom 4 Alamat --}}
             <div class="col-12 col-md-3 mb-3">
                 <h5 class="font-inter fw-bold mb-3">Alamat</h5>
-                <p> Jl. Juanda, No. 15, Samarinda, Kalimantan Timur </p>
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.372209878414!2d117.13470431547099!3d-0.4690905995215416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd683a675c8f5c3%3A0xb027a90c2f9c2b77!2sJl.%20Juanda%2C%20Samarinda%2C%20Kalimantan%20Timur!5e0!3m2!1sid!2sid!4v1622574225805!5m2!1sid!2sid" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <a href="https://maps.app.goo.gl/CzUih5HGgP9W7YBi8" class="nav-link p-0 text-muted" target="_blank">Lihat di Google Maps</a>
             </div>
+            
+            
 
             </div>
         </footer>

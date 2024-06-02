@@ -33,7 +33,7 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $berita->judul }}</td>
-                            <td>{{ strip_tags($berita->desc) }}</td>
+                            <td>{{ strip_tags($berita->isi) }}</td>
                             <td>
                                 {{-- <a href="{{ route('berita.edit', $berita->id) }}" class="btn btn-warning">Edit</a> --}}
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $berita->id }}">Hapus</button>
@@ -47,7 +47,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Apakah Anda yakin ingin menghapus buku <strong>{{ $berita->judul }}</strong>?
+                                                Apakah Anda yakin ingin menghapus berita <strong>{{ $berita->judul }}</strong>?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

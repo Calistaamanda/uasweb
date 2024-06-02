@@ -70,53 +70,31 @@
     </section>
     {{-- koleksi --}}
 
-    <!-- berita -->
-<div class="container px-4 px-lg-5 my-5">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
-    <div class="col-md-10 col-lg-8 col-xl-7">
-      <div class="header-koleksi text-center mb-5">
-        <h2 class="fw-bold">Berita Terkini</h2>
+    <!-- berita buku baru -->
+    <section id="berita" class="py-5">
+      <div class="container">
+          <div class="header-koleksi text-center">
+              <h2 class="fw-bold">Berita Terkini</h2>
+          </div>
+  
+          <div class="row py-5" data-aos="flip-up">
+              @foreach ($bukus as $item)
+              <div class="col-lg-4">
+                  <div class="card border-0 shadow">
+                      <div class="card-body">
+                        <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
+                          <p class="card-text text-secondary mb-2">{{ $item->created_at->format('d F Y') }}</p>
+                          <h5 class="card-title fw-bold mb-3">{{ $item->judul }}</h5>
+                          <p class="card-text mb-3">{{ Str::limit(strip_tags($item->deskripsi), 100) }}</p>
+                          <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Klik untuk baca</a>
+                      </div>
+                  </div>
+              </div>
+              @endforeach
+          </div>
       </div>
-      <div class="row gy-4" data-aos="flip-up">
-        <!-- Post preview-->
-        <div class="col-md-12">
-          <div class="post-preview border rounded p-4 shadow-sm">
-            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
-            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
-            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
-            <p class="post-meta mt-3">
-              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
-            </p>
-          </div>
-        </div>
-        <!-- Post preview-->
-        <div class="col-md-12">
-          <div class="post-preview border rounded p-4 shadow-sm">
-            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
-            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
-            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
-            <p class="post-meta mt-3">
-              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
-            </p>
-          </div>
-        </div> 
-        <!-- Post preview-->
-        <div class="col-md-12">
-          <div class="post-preview border rounded p-4 shadow-sm">
-            <h5 class="fw-bold mb-3">Admin baru saja menambahkan buku baru</h5>
-            <p class="fw-bold mb-2">"{{ $item->judul }}"</p>
-            <a href="/detail/{{ $item->slug }}" class="btn btn-danger">Baca buku sekarang</a>
-            <p class="post-meta mt-3">
-              Posted by Admin on <a href="/" class="text-decoration-none">Visi Pustaka</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- berita -->
-
+  </section>
+<!-- berita buku baru -->
 
     {{-- Video --}}
     <section id="video" class="py-5" data-aos="zoom-in">
